@@ -25,7 +25,7 @@ $10 ~ /^[0-9-]+$/ {
     method=substr($6,2)
     endpoint=$7
     status=$9
-    size=$10
+    size=($10 == "-" ? 0 : $10)
 
     print ip "," "\"" timestamp "\"" "," method "," endpoint "," status "," size
     next
