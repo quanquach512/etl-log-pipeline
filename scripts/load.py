@@ -9,7 +9,7 @@ import time
 logging.basicConfig(level=logging.INFO, format="%(asctime)s [%(levelname)s] %(message)s")
                     
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
-INPUT_FILE = PROJECT_ROOT/"data/processed/transfomed_logs.csv"
+INPUT_FILE = PROJECT_ROOT/"data/processed/transformed_logs.csv"
 ENV_FILE = PROJECT_ROOT/"config/.env"
 
 load_dotenv(ENV_FILE)

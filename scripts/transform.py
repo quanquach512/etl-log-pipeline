@@ -3,7 +3,7 @@ from pathlib import Path
 
 PROJECT_ROOT = Path(__file__).resolve().parents[1]
 INPUT_FILE = PROJECT_ROOT/"data/processed/extracted_logs.csv"
-OUTPUT_FILE = PROJECT_ROOT/"data/processed/transfomed_logs.csv"
+OUTPUT_FILE = PROJECT_ROOT/"data/processed/transformed_logs.csv"
 
 
 print("[TRANSFORM] Starting...")
