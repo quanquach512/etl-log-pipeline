@@ -10,6 +10,7 @@ It supports both **cron-based scheduling** and **Apache Airflow orchestration**,
 ---
 
 ## Architecture
+```
 Raw Log (.gz)
 ↓
 Download & Unzip (Bash)
@@ -19,6 +20,8 @@ Extract (AWK / Bash)
 Transform (Python)
 ↓
 Load (PostgreSQL COPY + Upsert)
+```
+
 
 ---
 
@@ -76,8 +79,6 @@ Load (PostgreSQL COPY + Upsert)
 
 Example: 0 1 * * * scripts/run_pipeline.sh >> logs/pipeline.log 2>&1
 
----
-
 ### Apache Airflow
 - DAG-based orchestration with task dependencies:
   - download → extract → transform → load
@@ -88,7 +89,7 @@ Example: 0 1 * * * scripts/run_pipeline.sh >> logs/pipeline.log 2>&1
 ## Performance
 
 - Processes ~1.89 million log records
-- Bulk load completes in ~8 seconds using PostgreSQL `COPY`
+- Bulk load completes in ~8 seconds using PostgreSQL
 - Efficient handling of large datasets with minimal memory overhead
 
 ---
@@ -104,6 +105,7 @@ Example: 0 1 * * * scripts/run_pipeline.sh >> logs/pipeline.log 2>&1
 ---
 
 ## Project Structure
+```
 etl-log-pipeline/
 ├── dags/
 ├── scripts/
@@ -113,6 +115,8 @@ etl-log-pipeline/
 ├── logs/
 ├── README.md
 └── requirements.txt
+```
+
 
 ---
 
