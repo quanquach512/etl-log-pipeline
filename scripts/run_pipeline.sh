@@ -8,7 +8,7 @@ echo "[PIPELINE] Starting ETL pipeline...."
 
 bash "$SCRIPT_ROOT/download.sh"
 bash "$SCRIPT_ROOT/extract.sh"
-python3 "$SCRIPT_ROOT/transform.py"
-python3 "$SCRIPT_ROOT/load.py"
+"$PROJECT_ROOT/venv/bin/python" "$SCRIPT_ROOT/transform.py"
+"$PROJECT_ROOT/venv/bin/python" "$SCRIPT_ROOT/load.py"
 
 echo "[PIPELINE] ETL pipeline completed..."
