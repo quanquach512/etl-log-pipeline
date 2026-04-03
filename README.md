@@ -19,7 +19,7 @@ Extract (AWK / Bash)
 ↓
 Transform (Python)
 ↓
-Load (PostgreSQL COPY + Upsert)
+Load (PostgreSQL COPY → Staging → Upsert)
 ```
 
 
@@ -31,8 +31,10 @@ Load (PostgreSQL COPY + Upsert)
 - Parses unstructured log data into structured schema
 - Handles malformed and invalid records safely
 - Bulk loading using PostgreSQL `COPY` for high performance
-- Idempotent pipeline design using staging + upsert
-- Prevents duplicate records with composite unique constraint
+- Staging-table pattern for controlled data loading
+- Deduplication using `SELECT DISTINCT` on staging data
+- Idempotent pipeline design (safe to rerun without duplicates)
+- Upsert logic using PostgreSQL `ON CONFLICT`
 - Supports both cron and Airflow orchestration
 - Modular and extensible pipeline structure
 
@@ -65,9 +67,10 @@ Load (PostgreSQL COPY + Upsert)
 - Skips invalid records safely with logging
 
 ### Load
-- Uses PostgreSQL `COPY` for fast bulk loading
-- Loads data into staging table, then upserts into target table
-- Ensures idempotent reruns (no duplicate records)
+- Loads data into a staging table using PostgreSQL `COPY`
+- Deduplicates staging data using `SELECT DISTINCT`
+- Performs upsert into the target table using `ON CONFLICT`
+- Ensures idempotent reruns (no duplicate records on re-execution)
 
 ---
 
@@ -90,6 +93,7 @@ Example: 0 1 * * * scripts/run_pipeline.sh >> logs/pipeline.log 2>&1
 
 - Processes ~1.89 million log records
 - Bulk load completes in ~8 seconds using PostgreSQL
+- End-to-end load step completes in under ~1–2 minutes locally
 - Efficient handling of large datasets with minimal memory overhead
 
 ---
@@ -97,7 +101,8 @@ Example: 0 1 * * * scripts/run_pipeline.sh >> logs/pipeline.log 2>&1
 ## Reliability Features
 
 - Idempotent pipeline design (safe to rerun)
-- Staging-table based upsert
+- Staging-table based loading pattern
+- Deduplication before upsert
 - Composite unique constraint to prevent duplicates
 - Logging for debugging and monitoring
 - Graceful handling of malformed data
@@ -116,7 +121,14 @@ etl-log-pipeline/
 ├── README.md
 └── requirements.txt
 ```
+---
 
+## Key Highlights
+
+- Built an end-to-end ETL pipeline processing ~1.8M log records
+- Implemented high-performance bulk loading using PostgreSQL `COPY`
+- Designed a staging + upsert pattern to support deduplication and idempotent reruns
+- Integrated both cron and Airflow for orchestration
 
 ---
 
